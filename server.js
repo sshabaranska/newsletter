@@ -21,10 +21,3 @@ start_express.start(config);
 var checkDB = require('./config/createDB').checkDB;
 checkDB.createAdminUser();
 
-
-
-/*  Why we dont need it to create server ???
-http.createServer(app).listen(app.get('port'), function(){
-	console.log('Express server listening on port' + app.get('port'));
-});
-*/
