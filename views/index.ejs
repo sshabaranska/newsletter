@@ -15,7 +15,16 @@
             <a href="/login" class="btn btn-default">Local Login</a>
             <a href="/signup" class="btn btn-default">Local Signup</a>
         </div>
-
+        <div>
+            You are logged as:
+            <strong> 
+                <% if(user) { %>
+                    <%= user.local.username %>
+                <% } else {%>
+                    ---
+                 <% } %>   
+            </strong>
+        </div>
     </div>
 </body>
 </html>
