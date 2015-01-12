@@ -3,11 +3,15 @@ module.exports = function(app, passport) {
 
 	// home page =====================
 	app.get('/', function(req, res) {
-		res.render('index.ejs'); // load index.ejs file
+		res.render('index.ejs', {user: req.user}); // load index.ejs file and pass user to template
 	});
 
 	// login page ====================
 	app.get('/login', function(req, res) {
+		// check  if the user is already logged, if yes skip login
+		if(req.isAuthenticated())
+			res.redirect('/profile');
+			
 		// show message if wrong login
 		res.render('login.ejs', {message: req.flash('loginMessage') }); // pass to template
 	});
@@ -37,12 +41,12 @@ module.exports = function(app, passport) {
         res.render('profile.ejs', {user : req.user}); // get the user and pass to template
     });
 
-    /*/ logout ========================
-    app.get('/logout', function(res, req) {
-    	//req.logout();
+    // logout ========================
+    app.get('/logout', function(req, res) {
+    	req.logout();
     	res.redirect('/');
     });
-*/
+
 };
 
 // route middleware to make sure a user is logged in
