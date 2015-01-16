@@ -1,83 +1,33 @@
-//============ PASSPORT ==============
-var LocalStrategy = require('passport-local').Strategy,
-	User          = require('./../models/user').User;  // user model
+'use strict';
 
-	module.exports = function(passport){
-		
-		// used to serialize the user for the session
-	    passport.serializeUser(function(user, done) {
-	    	console.log(user);
-	        done(null, user.id);
-	    });
-
-	    // used to deserialize the user
-	    passport.deserializeUser(function(id, done) {
-	        User.findById(id, function(err, user) {
-	        	console.log(user);
-	            done(err, user);
-	        });
-	    });
-
-
-	    // signup ==================
-	    passport.use('local-signup', new LocalStrategy({
-	    	usernameField: 'username',
-	    	passwordField: 'password',
-	    	passReqToCallback: true
-		    },
-		    // callback with username & password from form
-		    function(req, username, password, done) {
-		    	//process.nextTick(function(){
-		    		// checking if user with this username exists
-		    		User.findOne({'local.username': username}, function (err, user) {
-		    			console.log(user, err);
-		    			if(err)
-		    				return done(err);
-		    			if(user){
-		    				return done(null, false, req.flash('signupMessage', 'Not valid name'));
-		    			} else {
-		    				//create the new user
-		    				var newUser = new User();
-		    				// set the user data
-		    				newUser.local.username = username;
-		    				newUser.local.password = newUser.generateHash(password);
-		    				// save the user
-		    				newUser.save(function(err){
-		    					if(err)
-		    						throw err;
-		    					return done(null, newUser);
-		    				});
-		    			}
-		    		});
-		    	//});
-		    }
-		));
-
-	    // login ===================
-	    passport.use('local-login', new LocalStrategy({
-		    	usernameField: 'username',
-		    	passwordField: 'password',
-		    	passReqToCallback: true
-		    },
-	    	// callback with username & password from form
-		    function(req, username, password, done){
-		    	// cheking if user trying to login exists
-		    	User.findOne({'local.username': username}, function (err, user){
-		    		console.log(user);
-		    		if(err)
-		    			return done(err);
-		    		//if no user found return the message
-		    		if(!user)
-		    			return done(null, false, req.flash('loginMessage', 'No user found.'));
-		    		// check if password is valid
-		    		if (!user.validPassword(password))
-		    			return done(null, false, req.flash('loginMessage', 'Wrong password.'));
-		    		// return user if all data is valid
-		    		return done(null, user);
-		    	})
-		    }
-		));
-	};
-
-
+/**
+ * Module dependencies.
+ */
+var passport = require('passport'),
+	User = require('mongoose').model('User'),
+	path = require('path'),
+	config = require('./config');
 	
+/**
+ * Module init function.
+ */
+module.exports = function() {
+	// Serialize sessions
+	passport.serializeUser(function(user, done) {
+		done(null, user.id);
+	});
+
+	// Deserialize sessions
+	passport.deserializeUser(function(id, done) {
+		User.findOne({
+			_id: id
+		}, '-salt -password', function(err, user) {
+			done(err, user);
+		});
+	});
+
+	// Initialize strategies
+	config.getGlobbedFiles('./config/strategies/**/*.js').forEach(function(strategy) {
+		require(path.resolve(strategy))();
+	});
+};

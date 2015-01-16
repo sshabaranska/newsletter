@@ -1,23 +1,36 @@
-//=============== SERVER =======================
+'use strict';
+/**
+ * Module dependencies.
+ */
+var init = require('./config/init')(),
+	config = require('./config/config'),
+	mongoose = require('mongoose'),
+	chalk = require('chalk');
 
-var mongoose = require('mongoose'),
-	passport = require('passport'),
-	config 	 = require('./config/database');
-	//port  		 = process.env.PORT || 8008; 
+/**
+ * Main application entry file.
+ * Please note that the order of loading is important.
+ */
 
-//======== Main application entry files ========
+// Bootstrap db connection
+var db = mongoose.connect(config.db, function(err) {
+	if (err) {
+		console.error(chalk.red('Could not connect to MongoDB!'));
+		console.log(chalk.red(err));
+	}
+});
 
-// connect to mongoDB ==================
-var db = mongoose.connect(config.db);
+// Init the express application
+var app = require('./config/express')(db);
 
-// configure passport ==================
-require('./config/passport')(passport);
+// Bootstrap passport config
+require('./config/passport')();
 
-// configure express ===================
-var start_express = require('./config/express');
-start_express.start(config);
+// Start the app by listening on <port>
+app.listen(config.port);
 
-// check if def. user exist(db exist)
-var checkDB = require('./config/createDB').checkDB;
-checkDB.createAdminUser();
+// Expose app
+exports = module.exports = app;
 
+// Logging initialization
+console.log('MEAN.JS application started on port ' + config.port);
