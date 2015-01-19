@@ -1,8 +1,10 @@
 'use strict';
 
 // Setting up route
-angular.module('users').config(['$stateProvider',
-	function($stateProvider) {
+angular.module('users').config(['$stateProvider', '$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider) {
+
+		$urlRouterProvider.otherwise('/');
 		// Users state routing
 		$stateProvider.
 		state('home', {
@@ -20,6 +22,6 @@ angular.module('users').config(['$stateProvider',
 		state('page', {
 			url: '/page',
 			templateUrl: 'modules/users/views/page/page.client.view.html'
-		})
+		});
 	}
 ]);
