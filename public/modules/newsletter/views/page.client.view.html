@@ -1,0 +1,30 @@
+<div class="container" data-ng-controller="PageController">
+  <h2> Create Newsletter </h2>
+
+  <!-- Add newsletter -->
+  <form role="form" ng-submit="addNewsLetter()">
+  	<div class="row">
+      <div class="input-group">
+        <input type="text" ng-model="newNewsletter" ng-init="showDescr" ng-mousedown="showDescr = true" placeholder="New Newsletter" class="form-control">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Add">
+        </span>
+      </div>
+      <br>
+      <div ng-show="showDescr">
+      	<textarea placeholder="Description" ng-model="newsLetterDescription" class="form-control" rows="3"></textarea>
+        <br>
+        <textarea placeholder="Followers, enter emails separated by commas" class="form-control" ng-model="followers" rows="1"></textarea>
+      </div>
+    </div>
+    <br>
+    <h4>Existing newsletters:</h4>
+    	<p class="input-group" ng-repeat="newsletter in contentNewsLetters" style="cursor: move;">
+    	  <input type="text" ng-model="newsletter.title" class="form-control">
+    	    <span class="input-group-btn">
+    	      <a class="btn btn-success" ui-sref="addnews({newsletterID: newsletter.title})"> Add News </a>
+    	    </span>
+    	</p>
+  </form>
+</div>
+
