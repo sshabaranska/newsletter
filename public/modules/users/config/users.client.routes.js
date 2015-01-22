@@ -18,7 +18,7 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
 		state('signup', {
 			url: '/signup',
 			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
-		})
+		});
 
 	}
 ]);

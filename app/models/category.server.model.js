@@ -14,13 +14,11 @@ var CategorySchema = new Schema({
 		type: String,
 		required: true
 	},
-	group: [
-		email: {
+	group: [{
 			type: String,
 			default: '',
 			trim: true
-		}
-	]
+	}]
 });
 
 mongoose.model('Category', CategorySchema);

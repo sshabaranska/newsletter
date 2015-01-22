@@ -5,24 +5,24 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 		$scope.authentication = Authentication;
 		$scope.contentNewsLetters = [    // content of all Newsletter
 			{
-				"title": "JavaScript",
-				"creator": "Sviat",
-				"description": "blalblalbiyyyyyyyyyoooooototo",
-				"followers": "bla@bla.com, bla@bla.com"
+				'title': 'JavaScript',
+				'creator': 'Sviat',
+				'description': 'blalblalbiyyyyyyyyyoooooototo',
+				'followers': 'bla@bla.com, bla@bla.com'
 			},
 			{
-				"title": "Angular JavaScript",
-				"creator": "Svitlana",
-				"description": "blalblalbiyyyyyyyyyoooooototo",
-				"followers": "bla@bla.com, bla@bla.com"
+				'title': 'Angular JavaScript',
+				'creator': 'Svitlana',
+				'description': 'blalblalbiyyyyyyyyyoooooototo',
+				'followers': 'bla@bla.com, bla@bla.com'
 			},
 			{
-				"title": "Node JavaScript",
-				"creator": "Dima",
-				"description": "blalblalbiyyyyyyyyyoooooototo",
-				"followers": "bla@bla.com, bla@bla.com"
+				'title': 'Node JavaScript',
+				'creator': 'Dima',
+				'description': 'blalblalbiyyyyyyyyyoooooototo',
+				'followers': 'bla@bla.com, bla@bla.com'
 			}
-		]
+		];
 
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) {
@@ -35,17 +35,17 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 		// Add new Newsletter
 	    $scope.addNewsLetter = function() {
 	    	var newItem = {
-	    		"title": $scope.newNewsletter,
-	    		"creator": $scope.authentication.user,
-	    		"description": $scope.newsLetterDescription,
-	    		"followers": $scope.followers
-	    	}
+	    		'title': $scope.newNewsletter,
+	    		'creator': $scope.authentication.user,
+	    		'description': $scope.newsLetterDescription,
+	    		'followers': $scope.followers
+	    	};
 	    	console.log(newItem);
 	    	$scope.contentNewsLetters.push(newItem);
-	    	$scope.newsletter = "";
-	    	$scope.newsLetterDescription = "";
+	    	$scope.newsletter = '';
+	    	$scope.newsLetterDescription = '';
 	    	$scope.showDescr = false;
-	    	$scope.newNewsletter = "";
+	    	$scope.newNewsletter = '';
 	    	newItem = {};
 
     	};

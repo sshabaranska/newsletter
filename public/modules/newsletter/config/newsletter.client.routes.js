@@ -12,6 +12,6 @@ angular.module('newsletter').config(['$stateProvider',
 		state('addnews', {
 			url: '/addnews/:newsletterID/',
 			templateUrl: 'modules/newsletter/views/addnews.client.view.html'
-		})
+		});
 	}
 ]);

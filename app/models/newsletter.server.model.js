@@ -15,21 +15,23 @@ var NewsletterSchema = new Schema({
 		default: Date.now
 	},
 	body: [
-		title: {
-			type: String,
-			default: '',
-			trim: true,
-			required: 'Title cannot be blank'
-		},
-		content: {
-			type: String,
-			default: '',
-			trim: true,
-			required: 'Title cannot be blank'
-		},
-		user: {
-			type: Schema.ObjectId,
-			ref: 'User'
+		{
+			title: {
+				type: String,
+				default: '',
+				trim: true,
+				required: 'Title cannot be blank'
+			},
+			content: {
+				type: String,
+				default: '',
+				trim: true,
+				required: 'Title cannot be blank'
+			},
+			user: {
+				type: Schema.ObjectId,
+				ref: 'User'
+			}
 		}
 
 	],
