@@ -2,7 +2,18 @@
 
 angular.module('newsletter').controller('PageController', ['$scope', '$http', '$location', 'Authentication',
 	function($scope, $http, $location, Authentication) {
+
 		$scope.authentication = Authentication;
+		$scope.hideCreateField = true;
+		console.log($scope.authentication);
+
+		// Show Create Newsletter field if role:Admin
+		(function showCreateNewsletterField() {
+			if($scope.authentication.user.roles == 'admin')
+				$scope.hideCreateField = false;
+		})();
+
+		// hardcoded just for example
 		$scope.contentNewsLetters = [    // content of all Newsletter
 			{
 				'title': 'JavaScript',
