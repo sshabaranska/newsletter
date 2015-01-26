@@ -1,7 +1,7 @@
 {
-	"name": "mean",
+	"name": "Newsletter",
 	"version": "0.0.1",
-	"description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
+	"description": "Newsletter tool for internal usage in N-iX (developed by SiSi)",
 	"dependencies": {
 		"bootstrap": "~3",
 		"angular": "~1.2",

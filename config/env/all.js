@@ -2,13 +2,13 @@
 
 module.exports = {
 	app: {
-		title: 'MEAN',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
+		title: 'Newsletter',
+		description: 'Newsletter tool for internal usage in N-iX (developed by SiSi)',
 		keywords: 'MongoDB, Express, AngularJS, Node.js'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
-	sessionSecret: 'MEAN',
+	sessionSecret: 'SiSi',
 	sessionCollection: 'sessions',
 	assets: {
 		lib: {

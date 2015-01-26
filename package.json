@@ -1,6 +1,6 @@
 {
-	"name": "mean",
-	"description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
+	"name": "NewsLetter",
+	"description": "Newsletter tool for internal usage in N-iX",
 	"version": "0.0.1",
 	"engines": {
 		"node": "0.10.x",
