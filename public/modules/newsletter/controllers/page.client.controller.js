@@ -4,14 +4,21 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 	function($scope, $http, $location, Authentication) {
 
 		$scope.authentication = Authentication;
-		$scope.hideCreateField = true;
-		console.log($scope.authentication);
+		$scope.item = {};
+		$scope.newsletterList = [];
+		
+		// If user is signed in then redirect back home
+		if ($scope.authentication.user) {
+			console.log($scope.authentication);
+			$location.path('/page');
+		} else {
+			$location.path('/');
+		}
 
 		// Show Create Newsletter field if role:Admin
-		(function showCreateNewsletterField() {
-			if($scope.authentication.user.roles == 'admin')
-				$scope.hideCreateField = false;
-		})();
+		$scope.showCreateField = function() {
+			return ($scope.authentication.user.roles[0] === 'admin');
+		};
 
 		// hardcoded just for example
 		$scope.contentNewsLetters = [    // content of all Newsletter
@@ -35,24 +42,27 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 			}
 		];
 
-		// If user is signed in then redirect back home
-		if ($scope.authentication.user) {
-
-			$location.path('/page');
-		} else {
-			$location.path('/');
-		}
-
 		// Add new Newsletter
 	    $scope.addNewsLetter = function() {
-	    	var newItem = {
+	    	/*var newItem = {
 	    		'title': $scope.newNewsletter,
 	    		'creator': $scope.authentication.user,
 	    		'description': $scope.newsLetterDescription,
 	    		'followers': $scope.followers
-	    	};
-	    	console.log(newItem);
-	    	$scope.contentNewsLetters.push(newItem);
+	    	};*/
+	    	$scope.item.creator = $scope.authentication.user;
+	    	console.log(item);
+	    	
+	    	$http.post('/home', $scope.item).success(function(response) {
+				// If successful we assign the response to the global user model
+				$scope.newsletterList.push(response);
+
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+
+
+	    	$scope.newsletterList.push(item);
 	    	$scope.newsletter = '';
 	    	$scope.newsLetterDescription = '';
 	    	$scope.showDescr = false;
@@ -60,7 +70,5 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 	    	newItem = {};
 
     	};
-
-
 	}
 ]);

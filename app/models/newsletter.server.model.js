@@ -10,11 +10,19 @@ var mongoose = require('mongoose'),
  * Newsletter Schema
  */
 var NewsletterSchema = new Schema({
+	newslettertitle: {
+		type: String,
+		required: true
+	},
+	newsletterdescription: {
+		type: String,
+		required: true
+	},
 	created: {
 		type: Date,
 		default: Date.now
 	},
-	body: [
+	news: [
 		{
 			title: {
 				type: String,
@@ -26,7 +34,7 @@ var NewsletterSchema = new Schema({
 				type: String,
 				default: '',
 				trim: true,
-				required: 'Title cannot be blank'
+				required: 'Description cannot be blank'
 			},
 			user: {
 				type: Schema.ObjectId,
@@ -39,11 +47,11 @@ var NewsletterSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	category: {
+	followers: {
 		type: String,
-		required: true
+		default: '',
+		trim: true
 	}
-
 });
 
 mongoose.model('Newsletter', NewsletterSchema);

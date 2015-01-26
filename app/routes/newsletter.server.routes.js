@@ -4,21 +4,18 @@
  * Module dependencies.
  */
 var users = require('../../app/controllers/users.server.controller'),
-	newsletter = require('../../app/controllers/newsletter/newsletter.server.controller'),
-	category = require('../../app/controllers/newsletter/category.server.controller');
+	newsletter = require('../../app/controllers/newsletter.server.controller');
 
 module.exports = function(app) {
 	// Newsletter Routes
-	app.route('/newsletterList')
+	app.route('/home')
 		.get(newsletter.list)
-		.post(users.requiresLogin, category.categoryCreate, newsletter.create);
+		.post(users.requiresLogin, newsletter.create);
 
-	app.route('/newsletter/:newsletterId/:categoryId')
-		.get(newsletter.read, category.categoryRead)
+	app.route('/newsletter/:newsletterId')
+		.get(newsletter.read)
 		.put(users.requiresLogin, newsletter.hasAuthorization, newsletter.update);
-
 
 	// Finish by binding the newsletter middleware
 	app.param('newsletterId', newsletter.newsletterByID);
-	app.param('categoryId', category.categoryByID);
 };

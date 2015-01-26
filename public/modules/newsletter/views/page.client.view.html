@@ -1,43 +1,44 @@
 <div class="container" data-ng-controller="PageController">
   <h1 class="brand">"Tne N-iX times"</h1>
   <br>
-  <div ng-hide="hideCreateField">
+  <div ng-show="showCreateField()">
     <h3 class="headers"> Create Newsletter </h3>
 
     <!-- Add newsletter -->
-    <form role="form" ng-submit="addNewsLetter()">
+    <form role="form" data-ng-submit="addNewsLetter()">
     	<div class="row">
         <div class="input-group">
-          <input type="text" ng-model="newNewsletter" ng-init="showDescr" ng-mousedown="showDescr = true" placeholder="New Newsletter" class="form-control">
+          <input type="text" ng-model="item.newslettertitle" ng-init="showDescr" ng-mousedown="showDescr = true" placeholder="New Newsletter" class="form-control">
           <span class="input-group-btn">
             <input type="submit" class="btn btn-primary" value="Add">
           </span>
         </div>
         <br>
         <div ng-show="showDescr">
-        	<textarea placeholder="Description" ng-model="newsLetterDescription" class="form-control" rows="3"></textarea>
+        	<textarea placeholder="Description" ng-model="item.newsletterdescription" class="form-control" rows="3"></textarea>
           <br>
-          <textarea placeholder="Followers, enter emails separated by commas" class="form-control" ng-model="followers" rows="1"></textarea>
+          <textarea placeholder="Followers, enter emails separated by commas" class="form-control" ng-model="item.followers" rows="1"></textarea>
         </div>
       </div>
       <br>
     </form>
   </div>
+  
   <h4 class="headers">Newsletters:</h4>
-      <div class="alert alert-info" ng-repeat="newsletter in contentNewsLetters">
-        <p class="newsletter-headers"> {{newsletter.title}}</p>
-        <div class="">
-          <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                Properties
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
-              <li role="presentation"> <a role="menuitem" ui-sref="addnews({newsletterID: newsletter.title})">Add News</a> </li>
-              <li role="presentation" ng-class="{disabled:hideCreateField}"> <a role="menuitem" tabindex="-1" href="#">Del</a> </li>
-            </ul>
-          </div>
-        </div>
+  <div class="alert alert-info" ng-repeat="newsletter in contentNewsLetters">
+    <p class="newsletter-headers"> {{newsletter.title}}</p>
+    <div class="">
+      <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+            Properties
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+          <li role="presentation"> <a role="menuitem" ui-sref="addnews({newsletterID: newsletter.title})">Add News</a> </li>
+          <li role="presentation" ng-class="{disabled:hideCreateField}"> <a role="menuitem" tabindex="-1" href="#">Del</a> </li>
+        </ul>
       </div>
+    </div>
+  </div>
 </div>
 
