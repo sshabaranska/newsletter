@@ -25,8 +25,8 @@
   </div>
   
   <h4 class="headers">Newsletters:</h4>
-  <div class="alert alert-info" ng-repeat="newsletter in contentNewsLetters">
-    <p class="newsletter-headers"> {{newsletter.title}}</p>
+  <div class="alert alert-info" ng-repeat="newsletter in newsletterList">
+    <p class="newsletter-headers"> {{newsletter.newslettertitle}}</p>
     <div class="">
       <div class="dropdown">
         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -34,8 +34,8 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
-          <li role="presentation"> <a role="menuitem" ui-sref="addnews({newsletterID: newsletter.title})">Add News</a> </li>
-          <li role="presentation" ng-class="{disabled:hideCreateField}"> <a role="menuitem" tabindex="-1" href="#">Del</a> </li>
+          <li role="presentation"> <a role="menuitem" ui-sref="addnews({newsletterID: newsletter._id})">Add News</a> </li>
+          <li role="presentation" ng-disabled="!showCreateField()"> <a role="menuitem" tabindex="-1" href="#">Del</a> </li>
         </ul>
       </div>
     </div>

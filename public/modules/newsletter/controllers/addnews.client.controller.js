@@ -1,24 +1,13 @@
 'use strict';
 
-angular.module('newsletter').controller('AddNewsController', ['$scope', '$http', 'Authentication',
-	function($scope, $http, Authentication) {
+angular.module('newsletter').controller('AddNewsController', ['$scope', '$http', '$stateParams', 'Authentication', 
+	function($scope, $http, $stateParams, Authentication) {
 
 		$scope.authentication = Authentication;
-		console.log($scope.newsletterID);
-		$scope.newsletterNews = [
-			{
-				'title': 'JavaScript patterns',
-				'creator': 'Admin',
-				'description': 'recommended book for reading - Learning JavaScript Design Patterns (A book by Addy Osmani)',
-				'show': false
-			},
-			{
-				'title': 'Bla bla',
-				'creator': 'Admin',
-				'description': 'Bla bla bla bla bla bla bla bla bla bla......!!!!' ,
-				'show': false
-			}
-		];
+		$scope.id = $stateParams.newsletterID;
+
+		$scope.newsletter = {};
+		init();
 
 		// Add new News to Newsletter
 		$scope.addNews = function() {
@@ -39,6 +28,17 @@ angular.module('newsletter').controller('AddNewsController', ['$scope', '$http',
 		$scope.showDescription = function(showIndex) {
 			$scope.newsletterNews[showIndex].show = !$scope.newsletterNews[showIndex].show;
 		};
+
+		function init() {
+			$http.get('/newsletter/ ' + $scope.id).success(function(response) {
+
+				$scope.newsletter = response;
+				$scope().$apply();
+
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		}
 	}
 ]);
 

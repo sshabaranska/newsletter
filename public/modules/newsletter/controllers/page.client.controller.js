@@ -6,7 +6,9 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 		$scope.authentication = Authentication;
 		$scope.item = {};
 		$scope.newsletterList = [];
-		
+
+		init();
+
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) {
 			console.log($scope.authentication);
@@ -20,55 +22,39 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 			return ($scope.authentication.user.roles[0] === 'admin');
 		};
 
-		// hardcoded just for example
-		$scope.contentNewsLetters = [    // content of all Newsletter
-			{
-				'title': 'JavaScript',
-				'creator': 'Sviat',
-				'description': 'blalblalbiyyyyyyyyyoooooototo',
-				'followers': 'bla@bla.com, bla@bla.com'
-			},
-			{
-				'title': 'Angular JavaScript',
-				'creator': 'Svitlana',
-				'description': 'blalblalbiyyyyyyyyyoooooototo',
-				'followers': 'bla@bla.com, bla@bla.com'
-			},
-			{
-				'title': 'Node JavaScript',
-				'creator': 'Dima',
-				'description': 'blalblalbiyyyyyyyyyoooooototo',
-				'followers': 'bla@bla.com, bla@bla.com'
-			}
-		];
-
 		// Add new Newsletter
 	    $scope.addNewsLetter = function() {
-	    	/*var newItem = {
-	    		'title': $scope.newNewsletter,
-	    		'creator': $scope.authentication.user,
-	    		'description': $scope.newsLetterDescription,
-	    		'followers': $scope.followers
-	    	};*/
-	    	$scope.item.creator = $scope.authentication.user;
-	    	console.log(item);
+
+	    	if (!$scope.item.newslettertitle || $scope.item.newslettertitle === '' || 
+	    		!$scope.item.newsletterdescription || $scope.item.newsletterdescription === '' ||
+	    		!$scope.item.followers || $scope.item.followers === '') {
+	    		
+	    		$scope.error = 'All fields are required';
+	    		return $scope.error;
+	    	}
+	    	$scope.item.creator = $scope.authentication.user._id;
+	    	console.log($scope.item);
 	    	
 	    	$http.post('/home', $scope.item).success(function(response) {
-				// If successful we assign the response to the global user model
+
 				$scope.newsletterList.push(response);
+				$scope().$apply();
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+    	};
+
+    	// Init data
+    	function init() {
+    		$http.get('/home').success(function(response) {
+
+				$scope.newsletterList = response;
+				$scope().$apply();
 
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
-
-
-	    	$scope.newsletterList.push(item);
-	    	$scope.newsletter = '';
-	    	$scope.newsLetterDescription = '';
-	    	$scope.showDescr = false;
-	    	$scope.newNewsletter = '';
-	    	newItem = {};
-
-    	};
+    	}
 	}
+
 ]);

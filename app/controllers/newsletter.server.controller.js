@@ -71,7 +71,7 @@ exports.list = function(req, res) {
  * Newsletter middleware
  */
 exports.newsletterByID = function(req, res, next, id) {
-	Newsletter.findById(id).populate('creator').exec(function(err, newsletter) {
+	Newsletter.findById(id.trim()).populate('-creator').exec(function(err, newsletter) {
 		if (err) return next(err);
 		if (!newsletter) return next(new Error('Failed to load newsletter ' + id));
 		req.newsletter = newsletter;
