@@ -20,6 +20,6 @@ angular.module('users').config(['$stateProvider',
 		state('page', {
 			url: '/page',
 			templateUrl: 'modules/users/views/page/page.client.view.html'
-		})
+		});
 	}
 ]);
