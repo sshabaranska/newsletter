@@ -36,9 +36,8 @@ var NewsletterSchema = new Schema({
 				trim: true,
 				required: 'Description cannot be blank'
 			},
-			user: {
-				type: Schema.ObjectId,
-				ref: 'User'
+			addedBy: {
+				type: String
 			}
 		}
 

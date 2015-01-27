@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 	app.route('/newsletter/:newsletterId')
 		.get(newsletter.read)
-		.put(users.requiresLogin, newsletter.hasAuthorization, newsletter.update);
+		.put(newsletter.update);
 
 	// Finish by binding the newsletter middleware
 	app.param('newsletterId', newsletter.newsletterByID);

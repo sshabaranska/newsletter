@@ -7,33 +7,33 @@ angular.module('newsletter').controller('AddNewsController', ['$scope', '$http',
 		$scope.id = $stateParams.newsletterID;
 
 		$scope.newsletter = {};
+		$scope.news = {};
 		init();
 
 		// Add new News to Newsletter
-		$scope.addNews = function() {
-			var newNews = {
-				'title': $scope.title,
-				'creator': $scope.authentication.user.email,
-				'description': $scope.description,
-				'show': false
-			};
+		$scope.addNews = function(el) {
+			$scope.news.addedBy = $scope.authentication.user.email;
+			$scope.item = JSON.parse(JSON.stringify($scope.news))
+			$scope.newsletter.news.push($scope.item);
 
-			$scope.newsletterNews.push(newNews);
-			newNews = {};
-			$scope.title = '';
-			$scope.description = '';
+			$http.put('newsletter/' + $scope.id, $scope.newsletter).success(function(response) {
+
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+			$scope.news.title = '';
+			$scope.news.content = '';
 		};
 
 		// Hide and show description for news
 		$scope.showDescription = function(showIndex) {
-			$scope.newsletterNews[showIndex].show = !$scope.newsletterNews[showIndex].show;
+			$scope.newsletter.news[showIndex].show = !$scope.newsletter.news[showIndex].show;
 		};
 
 		function init() {
-			$http.get('/newsletter/ ' + $scope.id).success(function(response) {
+			$http.get('/newsletter/' + $scope.id).success(function(response) {
 
 				$scope.newsletter = response;
-				$scope().$apply();
 
 			}).error(function(response) {
 				$scope.error = response.message;

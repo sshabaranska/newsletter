@@ -11,14 +11,14 @@
 						<th>Added by</th>
 					</tr>
 				</thead>
-				<tbody ng-repeat="news in newsletterNews">
+				<tbody ng-repeat="n in newsletter.news">
 					<tr class="alert alert-warning" ng-click="showDescription($index)">
-						<td>{{news.title}}</td>
-						<td>{{news.creator}}</td>
+						<td>{{n.title}}</td>
+						<td>{{n.addedBy}}</td>
 					</tr>
-					<tr ng-show="news.show" class="alert alert-warning">
+					<tr ng-show="n.show" class="alert alert-warning">
 						<td> Description:
-		      				<textarea class="form-control" rows="3">{{news.description}}</textarea>
+		      				<textarea class="form-control" rows="3">{{n.content}}</textarea>
 		      			</td>
 		      			<td></td>
 		      		</tr>
@@ -28,16 +28,17 @@
 		<div class="form-group">
 			<h4 class="text-center"> Create news </h4>
 		</div>
+		
 		<div class="form-group">
 			<label class="col-sm-2 control-label"> Title </label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" ng-model="title" placeholder="News title"></input>
+				<input type="text" class="form-control" ng-model="news.title" placeholder="News title"></input>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label"> Description </label>
 			<div class="col-sm-10">
-				<textarea class="form-control" ng-model="description" placeholder="News description"></textarea>
+				<textarea class="form-control" ng-model="news.content" placeholder="News description"></textarea>
 			</div>
 		</div>
 		<div class="form-group">

@@ -49,8 +49,6 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
     		$http.get('/home').success(function(response) {
 
 				$scope.newsletterList = response;
-				$scope().$apply();
-
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

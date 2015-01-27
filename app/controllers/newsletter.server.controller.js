@@ -38,11 +38,12 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var newsletter = req.newsletter;
-
+	console.log('Update newsletter1: ' + newsletter);
 	newsletter = _.extend(newsletter, req.body);
-
+	console.log('Update newsletter2: ' + newsletter);
 	newsletter.save(function(err) {
 		if (err) {
+			console.log('Error: ' + err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -56,7 +57,7 @@ exports.update = function(req, res) {
  * List of newsletters
  */
 exports.list = function(req, res) {
-	Newsletter.find().sort('-created').populate('creator').exec(function(err, newsletter) {
+	Newsletter.find().exec(function(err, newsletter) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -71,7 +72,7 @@ exports.list = function(req, res) {
  * Newsletter middleware
  */
 exports.newsletterByID = function(req, res, next, id) {
-	Newsletter.findById(id.trim()).populate('-creator').exec(function(err, newsletter) {
+	Newsletter.findById(id).exec(function(err, newsletter) {
 		if (err) return next(err);
 		if (!newsletter) return next(new Error('Failed to load newsletter ' + id));
 		req.newsletter = newsletter;
