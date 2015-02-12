@@ -45,8 +45,11 @@
 			});
 		}));
 
-
+		// this is spec
 		it('$scope.signin() should login with a correct user and password', function() {
+
+			// this is expectations in Jasmine is an assertion that is either true or false
+
 			// Test expected GET request
 			$httpBackend.when('POST', '/auth/signin').respond(200, 'Fred');
 

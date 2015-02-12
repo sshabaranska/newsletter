@@ -7,7 +7,16 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 		$scope.item = {};
 		$scope.newsletterList = [];
 
-		init();
+    	// Init data
+    	(function init() {
+    		$http.get('/home')
+    		.success(function(response) {
+				$scope.newsletterList = response;
+			})
+			.error(function(response) {
+				$scope.error = response.message;
+			});
+    	})();
 
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) {
@@ -35,24 +44,21 @@ angular.module('newsletter').controller('PageController', ['$scope', '$http', '$
 	    	$scope.item.creator = $scope.authentication.user._id;
 	    	console.log($scope.item);
 	    	
-	    	$http.post('/home', $scope.item).success(function(response) {
-
+	    	$http.post('/home', $scope.item)
+	    	.success(function(response) {
 				$scope.newsletterList.push(response);
 				$scope().$apply();
-			}).error(function(response) {
+			})
+			.error(function(response) {
 				$scope.error = response.message;
 			});
     	};
 
-    	// Init data
-    	function init() {
-    		$http.get('/home').success(function(response) {
+    	// Delete Newsletter
+    	$scope.delNewsLetter = function() {
+    		
+    	};
 
-				$scope.newsletterList = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-    	}
 	}
 
 ]);

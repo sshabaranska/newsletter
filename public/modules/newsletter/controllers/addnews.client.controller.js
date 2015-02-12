@@ -8,12 +8,22 @@ angular.module('newsletter').controller('AddNewsController', ['$scope', '$http',
 
 		$scope.newsletter = {};
 		$scope.news = {};
-		init();
+
+		// Init data
+		(function init() {
+			$http.get('/newsletter/' + $scope.id).success(function(response) {
+
+				$scope.newsletter = response;
+
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		})();
 
 		// Add new News to Newsletter
 		$scope.addNews = function(el) {
 			$scope.news.addedBy = $scope.authentication.user.email;
-			$scope.item = JSON.parse(JSON.stringify($scope.news))
+			$scope.item = JSON.parse(JSON.stringify($scope.news));
 			$scope.newsletter.news.push($scope.item);
 
 			$http.put('newsletter/' + $scope.id, $scope.newsletter).success(function(response) {
@@ -30,15 +40,10 @@ angular.module('newsletter').controller('AddNewsController', ['$scope', '$http',
 			$scope.newsletter.news[showIndex].show = !$scope.newsletter.news[showIndex].show;
 		};
 
-		function init() {
-			$http.get('/newsletter/' + $scope.id).success(function(response) {
+		// Mailer
+		$scope.sendMail = function() {
 
-				$scope.newsletter = response;
-
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		}
+		};
 	}
 ]);
 
